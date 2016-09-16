@@ -18,7 +18,7 @@ var (
 func main() {
 	logger := logrus.New()
 
-	conn, err := grpc.Dial(*apolloHost)
+	conn, err := grpc.Dial(*apolloHost, grpc.WithInsecure())
 	if err != nil {
 		logger.Fatalf("Could not connect to Apollo: %v", err)
 	}
