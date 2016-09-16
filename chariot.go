@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"flag"
+	"fmt"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/davecgh/go-spew/spew"
+	"github.com/golang/protobuf/proto"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
@@ -43,5 +45,10 @@ func main() {
 		logger.Fatalf("Could not get champion: %v", err)
 	}
 
-	spew.Dump(champion)
+	var out bytes.Buffer
+	if err := proto.MarshalText(&out, champion); err != nil {
+		logger.Fatalf("Could not marshal champion: %v", err)
+	}
+
+	fmt.Println(out.String())
 }
