@@ -27,8 +27,10 @@ func main() {
 	client := apb.NewApolloClient(conn)
 
 	ctx := context.Background()
-	champion, err := client.GetChampion(ctx, &apb.GetChampionRequest{
-		ChampionId: 64, // this is Lee Sin
+
+	matchup, err := client.GetMatchup(ctx, &apb.GetMatchupRequest{
+		FocusChampionId: 51, // this is Caitlyn
+		EnemyChampionId: 81, // this is Ezreal
 		Patch: &apb.PatchRange{
 			Min: "6.16",
 			Max: "6.18",
@@ -39,16 +41,39 @@ func main() {
 			Max: 0x1000,
 		},
 		Region: apb.Region_NA,
-		Role:   apb.Role_JUNGLE,
+		Role:   apb.Role_BOT,
 	})
 	if err != nil {
-		logger.Fatalf("Could not get champion: %v", err)
+		logger.Fatalf("Could not get matchup: %v", err)
 	}
 
 	var out bytes.Buffer
-	if err := proto.MarshalText(&out, champion); err != nil {
-		logger.Fatalf("Could not marshal champion: %v", err)
+	if err := proto.MarshalText(&out, matchup); err != nil {
+		logger.Fatalf("Could not marshal matchup: %v", err)
 	}
+
+	// champion, err := client.GetChampion(ctx, &apb.GetChampionRequest{
+	// 	ChampionId: 64, // this is Lee Sin
+	// 	Patch: &apb.PatchRange{
+	// 		Min: "6.16",
+	// 		Max: "6.18",
+	// 	},
+	// 	// match everything
+	// 	Tier: &apb.TierRange{
+	// 		Min: 0x0000,
+	// 		Max: 0x1000,
+	// 	},
+	// 	Region: apb.Region_NA,
+	// 	Role:   apb.Role_JUNGLE,
+	// })
+	// if err != nil {
+	// 	logger.Fatalf("Could not get champion: %v", err)
+	// }
+
+	// var out bytes.Buffer
+	// if err := proto.MarshalText(&out, champion); err != nil {
+	// 	logger.Fatalf("Could not marshal champion: %v", err)
+	// }
 
 	fmt.Println(out.String())
 }
