@@ -1,0 +1,11 @@
+package: github.com/asunaio/chariot
+import:
+- package: github.com/Sirupsen/logrus
+- package: github.com/golang/protobuf
+  subpackages:
+  - proto
+  - ptypes/timestamp
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: google.golang.org/grpc
