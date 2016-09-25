@@ -1,8 +1,6 @@
 package runners
 
 import (
-	"fmt"
-
 	"github.com/Sirupsen/logrus"
 	apb "github.com/asunaio/chariot/gen-go/asuna"
 	"golang.org/x/net/context"
@@ -16,8 +14,8 @@ type Runners struct {
 	Charon apb.CharonClient
 }
 
-func (r *Runners) Run(ctx context.Context, task string) {
-	switch task {
+func (r *Runners) Run(ctx context.Context, runner string) {
+	switch runner {
 
 	case "Apollo::Champion":
 		r.ApolloChampion(ctx)
@@ -27,7 +25,13 @@ func (r *Runners) Run(ctx context.Context, task string) {
 		r.ApolloMatchup(ctx)
 		break
 
-	}
+	case "Charon::Match":
+		r.CharonMatch(ctx)
+		break
 
-	fmt.Println("nope")
+	default:
+		r.Logger.Fatalf("Unknown runner %q", runner)
+		break
+
+	}
 }

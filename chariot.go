@@ -19,6 +19,7 @@ var (
 )
 
 func main() {
+	flag.Parse()
 	logger := logrus.New()
 
 	// set up runners
