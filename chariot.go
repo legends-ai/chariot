@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"time"
 
 	"github.com/Sirupsen/logrus"
 	"golang.org/x/net/context"
@@ -47,5 +48,7 @@ func main() {
 
 	ctx := context.Background()
 	logger.Infof("Running runner %q", *runner)
+	start := time.Now()
 	r.Run(ctx, *runner)
+	logger.Infof("Completed; took %s", time.Now().Sub(start))
 }

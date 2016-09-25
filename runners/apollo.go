@@ -34,6 +34,7 @@ func (r *Runners) ApolloChampion(ctx context.Context) {
 		r.Logger.Fatalf("Could not marshal champion: %v", err)
 	}
 
+	fmt.Println(out.String())
 }
 
 // ApolloMatchup is Apollo::Matchup
