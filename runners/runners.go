@@ -17,16 +17,24 @@ type Runners struct {
 func (r *Runners) Run(ctx context.Context, runner string) {
 	switch runner {
 
-	case "Apollo::Champion":
+	case "Apollo::GetChampion":
 		r.ApolloChampion(ctx)
 		break
 
-	case "Apollo::Matchup":
+	case "Apollo::GetMatchup":
 		r.ApolloMatchup(ctx)
 		break
 
-	case "Charon::Match":
+	case "Charon::GetMatch":
 		r.CharonMatch(ctx)
+		break
+
+	case "Charon::GetMatchList":
+		r.CharonMatchList(ctx)
+		break
+
+	case "Charon::GetRankings":
+		r.CharonRankings(ctx)
 		break
 
 	default:
