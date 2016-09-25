@@ -28,6 +28,7 @@ func main() {
 	}
 
 	if *apolloHost != "" {
+		logger.Infof("Connecting to Apollo at %q", *apolloHost)
 		conn, err := grpc.Dial(*apolloHost, grpc.WithInsecure())
 		if err != nil {
 			logger.Fatalf("Could not connect to Apollo: %v", err)
@@ -36,6 +37,7 @@ func main() {
 	}
 
 	if *charonHost != "" {
+		logger.Infof("Connecting to Charon at %q", *charonHost)
 		conn, err := grpc.Dial(*charonHost, grpc.WithInsecure())
 		if err != nil {
 			logger.Fatalf("Could not connect to Charon: %v", err)
@@ -44,5 +46,6 @@ func main() {
 	}
 
 	ctx := context.Background()
+	logger.Infof("Running runner %q", *runner)
 	r.Run(ctx, *runner)
 }
