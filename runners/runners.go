@@ -25,6 +25,10 @@ func (r *Runners) Run(ctx context.Context, runner string) {
 		r.ApolloMatchup(ctx)
 		break
 
+	case "Apollo::GetMatchSum":
+		r.ApolloMatchSum(ctx)
+		break
+
 	case "Charon::GetMatch":
 		r.CharonMatch(ctx)
 		break

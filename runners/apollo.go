@@ -65,3 +65,53 @@ func (r *Runners) ApolloMatchup(ctx context.Context) {
 
 	fmt.Println(out.String())
 }
+
+// ApolloMatchSum is Apollo::GetMatchSum
+func (r *Runners) ApolloMatchSum(ctx context.Context) {
+	sum, err := r.Apollo.GetMatchSum(ctx, &apb.GetMatchSumRequest{
+		Filters: []*apb.MatchFilters{
+			{
+				ChampionId: 64,
+				EnemyId:    -1,
+				Patch:      "6.18",
+				Tier:       0x40,
+				Region:     apb.Region_NA,
+				Role:       apb.Role_JUNGLE,
+			},
+			{
+				ChampionId: 64,
+				EnemyId:    -1,
+				Patch:      "6.18",
+				Tier:       0x50,
+				Region:     apb.Region_NA,
+				Role:       apb.Role_JUNGLE,
+			},
+			{
+				ChampionId: 64,
+				EnemyId:    -1,
+				Patch:      "6.18",
+				Tier:       0x60,
+				Region:     apb.Region_NA,
+				Role:       apb.Role_JUNGLE,
+			},
+			{
+				ChampionId: 64,
+				EnemyId:    -1,
+				Patch:      "6.18",
+				Tier:       0x70,
+				Region:     apb.Region_NA,
+				Role:       apb.Role_JUNGLE,
+			},
+		},
+	})
+	if err != nil {
+		r.Logger.Fatalf("Could not get match sum: %v", err)
+	}
+
+	var out bytes.Buffer
+	if err := proto.MarshalText(&out, sum); err != nil {
+		r.Logger.Fatalf("Could not marshal match sum: %v", err)
+	}
+
+	fmt.Println(out.String())
+}
