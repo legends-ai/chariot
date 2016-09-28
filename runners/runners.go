@@ -3,6 +3,7 @@ package runners
 import (
 	"github.com/Sirupsen/logrus"
 	apb "github.com/asunaio/chariot/gen-go/asuna"
+	"github.com/golang/protobuf/proto"
 	"golang.org/x/net/context"
 )
 
@@ -14,36 +15,29 @@ type Runners struct {
 	Charon apb.CharonClient
 }
 
-func (r *Runners) Run(ctx context.Context, runner string) {
+func (r *Runners) Run(ctx context.Context, runner string) proto.Message {
 	switch runner {
 
 	case "Apollo::GetChampion":
-		r.ApolloChampion(ctx)
-		break
+		return r.ApolloChampion(ctx)
 
 	case "Apollo::GetMatchup":
-		r.ApolloMatchup(ctx)
-		break
+		return r.ApolloMatchup(ctx)
 
 	case "Apollo::GetMatchSum":
-		r.ApolloMatchSum(ctx)
-		break
+		return r.ApolloMatchSum(ctx)
 
 	case "Charon::GetMatch":
-		r.CharonMatch(ctx)
-		break
+		return r.CharonMatch(ctx)
 
 	case "Charon::GetMatchList":
-		r.CharonMatchList(ctx)
-		break
+		return r.CharonMatchList(ctx)
 
 	case "Charon::GetRankings":
-		r.CharonRankings(ctx)
-		break
+		return r.CharonRankings(ctx)
 
 	default:
 		r.Logger.Fatalf("Unknown runner %q", runner)
-		break
-
 	}
+	return nil
 }

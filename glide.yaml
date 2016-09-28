@@ -5,6 +5,7 @@ import:
   subpackages:
   - proto
   - ptypes/timestamp
+  - jsonpb
 - package: golang.org/x/net
   subpackages:
   - context

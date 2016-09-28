@@ -1,10 +1,14 @@
 package main
 
 import (
+	"bytes"
 	"flag"
+	"fmt"
 	"time"
 
 	"github.com/Sirupsen/logrus"
+	"github.com/golang/protobuf/jsonpb"
+	"github.com/golang/protobuf/proto"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
@@ -16,6 +20,7 @@ var (
 	apolloHost = flag.String("apollo_host", "", "Host of the Apollo server.")
 	charonHost = flag.String("charon_host", "", "Host of the Charon server.")
 
+	format = flag.String("format", "", "Format")
 	runner = flag.String("runner", "", "Runner")
 )
 
@@ -49,6 +54,28 @@ func main() {
 	ctx := context.Background()
 	logger.Infof("Running runner %q", *runner)
 	start := time.Now()
-	r.Run(ctx, *runner)
+
+	msg := r.Run(ctx, *runner)
+	switch *format {
+	case "json":
+		var out bytes.Buffer
+		if err := (&jsonpb.Marshaler{
+			EnumsAsInts:  false,
+			EmitDefaults: true,
+			OrigName:     false,
+		}).Marshal(&out, msg); err != nil {
+			r.Logger.Fatalf("Could not marshal msg: %v", err)
+		}
+		fmt.Println(out.String())
+		break
+	default:
+		var out bytes.Buffer
+		if err := proto.MarshalText(&out, msg); err != nil {
+			r.Logger.Fatalf("Could not marshal msg: %v", err)
+		}
+		fmt.Println(out.String())
+		break
+	}
+
 	logger.Infof("Completed; took %s", time.Now().Sub(start))
 }

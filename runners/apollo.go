@@ -1,16 +1,13 @@
 package runners
 
 import (
-	"bytes"
-	"fmt"
-
 	apb "github.com/asunaio/chariot/gen-go/asuna"
 	"github.com/golang/protobuf/proto"
 	"golang.org/x/net/context"
 )
 
 // ApolloChampion is Apollo::Champion
-func (r *Runners) ApolloChampion(ctx context.Context) {
+func (r *Runners) ApolloChampion(ctx context.Context) proto.Message {
 	champion, err := r.Apollo.GetChampion(ctx, &apb.GetChampionRequest{
 		ChampionId: 103, // this is Ahri
 		Patch: &apb.PatchRange{
@@ -28,17 +25,11 @@ func (r *Runners) ApolloChampion(ctx context.Context) {
 	if err != nil {
 		r.Logger.Fatalf("Could not get champion: %v", err)
 	}
-
-	var out bytes.Buffer
-	if err := proto.MarshalText(&out, champion); err != nil {
-		r.Logger.Fatalf("Could not marshal champion: %v", err)
-	}
-
-	fmt.Println(out.String())
+	return champion
 }
 
 // ApolloMatchup is Apollo::Matchup
-func (r *Runners) ApolloMatchup(ctx context.Context) {
+func (r *Runners) ApolloMatchup(ctx context.Context) proto.Message {
 	matchup, err := r.Apollo.GetMatchup(ctx, &apb.GetMatchupRequest{
 		FocusChampionId: 51, // this is Caitlyn
 		EnemyChampionId: 81, // this is Ezreal
@@ -57,17 +48,11 @@ func (r *Runners) ApolloMatchup(ctx context.Context) {
 	if err != nil {
 		r.Logger.Fatalf("Could not get matchup: %v", err)
 	}
-
-	var out bytes.Buffer
-	if err := proto.MarshalText(&out, matchup); err != nil {
-		r.Logger.Fatalf("Could not marshal matchup: %v", err)
-	}
-
-	fmt.Println(out.String())
+	return matchup
 }
 
 // ApolloMatchSum is Apollo::GetMatchSum
-func (r *Runners) ApolloMatchSum(ctx context.Context) {
+func (r *Runners) ApolloMatchSum(ctx context.Context) proto.Message {
 	sum, err := r.Apollo.GetMatchSum(ctx, &apb.GetMatchSumRequest{
 		Filters: []*apb.MatchFilters{
 			{
@@ -107,11 +92,5 @@ func (r *Runners) ApolloMatchSum(ctx context.Context) {
 	if err != nil {
 		r.Logger.Fatalf("Could not get match sum: %v", err)
 	}
-
-	var out bytes.Buffer
-	if err := proto.MarshalText(&out, sum); err != nil {
-		r.Logger.Fatalf("Could not marshal match sum: %v", err)
-	}
-
-	fmt.Println(out.String())
+	return sum
 }
