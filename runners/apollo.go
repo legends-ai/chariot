@@ -12,7 +12,7 @@ import (
 // ApolloChampion is Apollo::Champion
 func (r *Runners) ApolloChampion(ctx context.Context) {
 	champion, err := r.Apollo.GetChampion(ctx, &apb.GetChampionRequest{
-		ChampionId: 64, // this is Lee Sin
+		ChampionId: 103, // this is Ahri
 		Patch: &apb.PatchRange{
 			Min: "6.16",
 			Max: "6.18",
@@ -23,7 +23,7 @@ func (r *Runners) ApolloChampion(ctx context.Context) {
 			Max: 0x1000,
 		},
 		Region: apb.Region_NA,
-		Role:   apb.Role_JUNGLE,
+		Role:   apb.Role_MID,
 	})
 	if err != nil {
 		r.Logger.Fatalf("Could not get champion: %v", err)

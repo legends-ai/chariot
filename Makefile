@@ -20,3 +20,6 @@ init:
 
 install: init genproto
 	glide install
+
+apollotunnel:
+	ssh -fNL 4834:apollo.marathon.mesos:4834 centos@52.42.186.11
