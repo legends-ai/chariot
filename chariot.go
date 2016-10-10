@@ -48,7 +48,7 @@ func main() {
 		if err != nil {
 			logger.Fatalf("Could not connect to Charon: %v", err)
 		}
-		r.Charon = apb.NewCharonClient(conn)
+		r.Charon = apb.NewCharonServiceClient(conn)
 	}
 
 	ctx := context.Background()

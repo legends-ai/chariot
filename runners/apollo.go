@@ -11,7 +11,7 @@ func (r *Runners) ApolloChampion(ctx context.Context) proto.Message {
 	champion, err := r.Apollo.GetChampion(ctx, &apb.GetChampionRequest{
 		ChampionId: 103, // this is Ahri
 		Patch: &apb.PatchRange{
-			Min: "6.16",
+			Min: "6.18",
 			Max: "6.18",
 		},
 		// match everything
