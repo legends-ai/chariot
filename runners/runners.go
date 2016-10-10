@@ -30,6 +30,9 @@ func (r *Runners) Run(ctx context.Context, runner string) proto.Message {
 	case "Charon::GetMatch":
 		return r.CharonMatch(ctx)
 
+	case "Charon::GetDominionMatch":
+		return r.CharonDominionMatch(ctx)
+
 	case "Charon::GetMatchList":
 		return r.CharonMatchList(ctx)
 

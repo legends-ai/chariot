@@ -11,11 +11,25 @@ func (r *Runners) CharonMatch(ctx context.Context) proto.Message {
 	match, err := r.Charon.GetMatch(ctx, &apb.CharonMatchRequest{
 		Match: &apb.MatchId{
 			Region: apb.Region_NA,
-			Id:     1365660506,
+			Id:     2300639987,
 		},
 	})
 	if err != nil {
 		r.Logger.Fatalf("Could not get match: %v", err)
+	}
+	return match
+}
+
+// CharonMatch is Charon::GetDominionMatch
+func (r *Runners) CharonDominionMatch(ctx context.Context) proto.Message {
+	match, err := r.Charon.GetMatch(ctx, &apb.CharonMatchRequest{
+		Match: &apb.MatchId{
+			Region: apb.Region_NA,
+			Id:     2315462640,
+		},
+	})
+	if err != nil {
+		r.Logger.Fatalf("Could not get dominion match: %v", err)
 	}
 	return match
 }
