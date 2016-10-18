@@ -17,8 +17,8 @@ import (
 )
 
 var (
-	apolloHost = flag.String("apollo_host", "", "Host of the Apollo server.")
-	charonHost = flag.String("charon_host", "", "Host of the Charon server.")
+	apolloHost = flag.String("apollo_host", "localhost:4834", "Host of the Apollo server.")
+	charonHost = flag.String("charon_host", "localhost:5609", "Host of the Charon server.")
 
 	printJSON = flag.Bool("json", false, "Prints output in JSON")
 	runner    = flag.String("runner", "", "Runner")
