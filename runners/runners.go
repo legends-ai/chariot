@@ -12,7 +12,7 @@ type Runners struct {
 	Logger *logrus.Logger
 
 	Apollo apb.ApolloClient
-	Charon apb.CharonServiceClient
+	Charon apb.CharonClient
 }
 
 func (r *Runners) Run(ctx context.Context, runner string) proto.Message {

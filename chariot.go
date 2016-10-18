@@ -22,6 +22,7 @@ var (
 
 	printJSON = flag.Bool("json", false, "Prints output in JSON")
 	runner    = flag.String("runner", "", "Runner")
+	matchId   = flag.Uint64("matchId", 2300639987, "Match ID to use with Charon")
 )
 
 func main() {
@@ -48,10 +49,10 @@ func main() {
 		if err != nil {
 			logger.Fatalf("Could not connect to Charon: %v", err)
 		}
-		r.Charon = apb.NewCharonServiceClient(conn)
+		r.Charon = apb.NewCharonClient(conn)
 	}
 
-	ctx := context.Background()
+	ctx := context.WithValue(context.Background(), "matchId", *matchId)
 	logger.Infof("Running runner %q", *runner)
 	start := time.Now()
 

@@ -6,12 +6,12 @@ import (
 	"golang.org/x/net/context"
 )
 
-// CharonMatch is Charon::GetMatch
+// CharonRpc_Match is Charon::GetMatch
 func (r *Runners) CharonMatch(ctx context.Context) proto.Message {
-	match, err := r.Charon.GetMatch(ctx, &apb.CharonMatchRequest{
+	match, err := r.Charon.GetMatch(ctx, &apb.CharonRpc_MatchRequest{
 		Match: &apb.MatchId{
 			Region: apb.Region_NA,
-			Id:     2300639987,
+			Id:     ctx.Value("matchId").(uint64),
 		},
 	})
 	if err != nil {
@@ -20,9 +20,9 @@ func (r *Runners) CharonMatch(ctx context.Context) proto.Message {
 	return match
 }
 
-// CharonMatch is Charon::GetDominionMatch
+// CharonRpc_Match is Charon::GetDominionMatch
 func (r *Runners) CharonDominionMatch(ctx context.Context) proto.Message {
-	match, err := r.Charon.GetMatch(ctx, &apb.CharonMatchRequest{
+	match, err := r.Charon.GetMatch(ctx, &apb.CharonRpc_MatchRequest{
 		Match: &apb.MatchId{
 			Region: apb.Region_NA,
 			Id:     2315462640,
@@ -34,9 +34,9 @@ func (r *Runners) CharonDominionMatch(ctx context.Context) proto.Message {
 	return match
 }
 
-// CharonMatchList is Charon::GetMatchList
+// CharonRpc_MatchList is Charon::GetMatchList
 func (r *Runners) CharonMatchList(ctx context.Context) proto.Message {
-	match, err := r.Charon.GetMatchList(ctx, &apb.CharonMatchListRequest{
+	match, err := r.Charon.GetMatchList(ctx, &apb.CharonRpc_MatchListRequest{
 		Summoner: &apb.SummonerId{
 			Region: apb.Region_NA,
 			Id:     29236065,
@@ -56,7 +56,7 @@ func (r *Runners) CharonMatchList(ctx context.Context) proto.Message {
 
 // CharonRankings is Charon::GetRankings
 func (r *Runners) CharonRankings(ctx context.Context) proto.Message {
-	rankings, err := r.Charon.GetRankings(ctx, &apb.CharonRankingsRequest{
+	rankings, err := r.Charon.GetRankings(ctx, &apb.CharonRpc_RankingsRequest{
 		Region:      apb.Region_NA,
 		SummonerIds: []uint64{29236065, 24575247},
 	})
