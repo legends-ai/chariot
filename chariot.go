@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/Sirupsen/logrus"
@@ -34,7 +35,7 @@ func main() {
 		Logger: logger,
 	}
 
-	if *apolloHost != "" {
+	if strings.Contains(*runner, "Apollo") {
 		logger.Infof("Connecting to Apollo at %q", *apolloHost)
 		conn, err := grpc.Dial(*apolloHost, grpc.WithInsecure())
 		if err != nil {
@@ -43,7 +44,7 @@ func main() {
 		r.Apollo = apb.NewApolloClient(conn)
 	}
 
-	if *charonHost != "" {
+	if strings.Contains(*runner, "Charon") {
 		logger.Infof("Connecting to Charon at %q", *charonHost)
 		conn, err := grpc.Dial(*charonHost, grpc.WithInsecure())
 		if err != nil {
