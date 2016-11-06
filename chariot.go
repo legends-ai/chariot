@@ -20,10 +20,12 @@ import (
 var (
 	apolloHost = flag.String("apollo_host", "localhost:4834", "Host of the Apollo server.")
 	charonHost = flag.String("charon_host", "localhost:5609", "Host of the Charon server.")
+	printJSON  = flag.Bool("json", false, "Prints output in JSON")
+	runner     = flag.String("runner", "", "Runner")
 
-	printJSON = flag.Bool("json", false, "Prints output in JSON")
-	runner    = flag.String("runner", "", "Runner")
-	matchId   = flag.Uint64("matchId", 2300639987, "Match ID to use with Charon")
+	locale  = flag.String("locale", "en_US", "Locale")
+	matchId = flag.Uint64("matchId", 2300639987, "Match ID to use with Charon")
+	version = flag.String("version", "", "Version")
 )
 
 func main() {
@@ -53,7 +55,9 @@ func main() {
 		r.Charon = apb.NewCharonClient(conn)
 	}
 
-	ctx := context.WithValue(context.Background(), "matchId", *matchId)
+	ctx := context.WithValue(context.Background(), "locale", *locale)
+	ctx = context.WithValue(ctx, "matchId", *matchId)
+	ctx = context.WithValue(ctx, "version", *version)
 	logger.Infof("Running runner %q", *runner)
 	start := time.Now()
 
