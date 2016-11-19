@@ -66,15 +66,15 @@ func (r *Runners) CharonRankings(ctx context.Context) proto.Message {
 	return rankings
 }
 
-// CharonStaticChampions is Charon::GetStaticChampions
-func (r *Runners) CharonStaticChampions(ctx context.Context) proto.Message {
-	sc, err := r.Charon.GetStaticChampions(ctx, &apb.CharonRpc_StaticChampionsRequest{
+// CharonStaticChampions is Charon::GetStatic
+func (r *Runners) CharonStatic(ctx context.Context) proto.Message {
+	sc, err := r.Charon.GetStatic(ctx, &apb.CharonRpc_StaticRequest{
 		Region:  apb.Region_NA,
 		Locale:  apb.Locale(apb.Locale_value[ctx.Value("locale").(string)]),
 		Version: ctx.Value("version").(string),
 	})
 	if err != nil {
-		r.Logger.Fatalf("Could not get static champions: %v", err)
+		r.Logger.Fatalf("Could not get static: %v", err)
 	}
 	return sc
 }

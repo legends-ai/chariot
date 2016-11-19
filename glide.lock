@@ -1,11 +1,12 @@
 hash: 335b1097390e199a07afc04326840f62b2b2e5845d8c05b95efe8d884020eb6b
-updated: 2016-09-27T21:15:57.357347664-05:00
+updated: 2016-11-19T18:31:05.0709169-05:00
 imports:
 - name: github.com/golang/protobuf
   version: 87c000235d3d852c1628dc9490cd21ab36a7d69f
   subpackages:
   - jsonpb
   - proto
+  - ptypes/empty
   - ptypes/timestamp
 - name: github.com/Sirupsen/logrus
   version: 4b6ea7319e214d98c938f12692336f7ca9348d6b

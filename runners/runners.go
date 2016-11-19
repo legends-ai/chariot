@@ -39,8 +39,8 @@ func (r *Runners) Run(ctx context.Context, runner string) proto.Message {
 	case "Charon::GetRankings":
 		return r.CharonRankings(ctx)
 
-	case "Charon::GetStaticChampions":
-		return r.CharonStaticChampions(ctx)
+	case "Charon::GetStatic":
+		return r.CharonStatic(ctx)
 
 	default:
 		r.Logger.Fatalf("Unknown runner %q", runner)
