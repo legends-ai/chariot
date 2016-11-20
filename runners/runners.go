@@ -11,21 +11,12 @@ import (
 type Runners struct {
 	Logger *logrus.Logger
 
-	Apollo apb.ApolloClient
-	Charon apb.CharonClient
+	Lucinda apb.LucindaClient
+	Charon  apb.CharonClient
 }
 
 func (r *Runners) Run(ctx context.Context, runner string) proto.Message {
 	switch runner {
-
-	case "Apollo::GetChampion":
-		return r.ApolloChampion(ctx)
-
-	case "Apollo::GetMatchup":
-		return r.ApolloMatchup(ctx)
-
-	case "Apollo::GetMatchSum":
-		return r.ApolloMatchSum(ctx)
 
 	case "Charon::GetMatch":
 		return r.CharonMatch(ctx)
@@ -41,6 +32,15 @@ func (r *Runners) Run(ctx context.Context, runner string) proto.Message {
 
 	case "Charon::GetStatic":
 		return r.CharonStatic(ctx)
+
+	case "Lucinda::GetChampion":
+		return r.LucindaChampion(ctx)
+
+	case "Lucinda::GetMatchup":
+		return r.LucindaMatchup(ctx)
+
+	case "Lucinda::GetMatchSum":
+		return r.LucindaMatchSum(ctx)
 
 	default:
 		r.Logger.Fatalf("Unknown runner %q", runner)

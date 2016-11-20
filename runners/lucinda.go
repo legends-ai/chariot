@@ -6,9 +6,9 @@ import (
 	"golang.org/x/net/context"
 )
 
-// ApolloChampion is Apollo::Champion
-func (r *Runners) ApolloChampion(ctx context.Context) proto.Message {
-	champion, err := r.Apollo.GetChampion(ctx, &apb.GetChampionRequest{
+// LucindaChampion is Lucinda::Champion
+func (r *Runners) LucindaChampion(ctx context.Context) proto.Message {
+	champion, err := r.Lucinda.GetChampion(ctx, &apb.LucindaRpc_GetChampionRequest{
 		ChampionId: 103, // this is Ahri
 		Patch: &apb.PatchRange{
 			Min: "6.18",
@@ -28,9 +28,9 @@ func (r *Runners) ApolloChampion(ctx context.Context) proto.Message {
 	return champion
 }
 
-// ApolloMatchup is Apollo::Matchup
-func (r *Runners) ApolloMatchup(ctx context.Context) proto.Message {
-	matchup, err := r.Apollo.GetMatchup(ctx, &apb.GetMatchupRequest{
+// LucindaMatchup is Lucinda::Matchup
+func (r *Runners) LucindaMatchup(ctx context.Context) proto.Message {
+	matchup, err := r.Lucinda.GetMatchup(ctx, &apb.LucindaRpc_GetMatchupRequest{
 		FocusChampionId: 51, // this is Caitlyn
 		EnemyChampionId: 81, // this is Ezreal
 		Patch: &apb.PatchRange{
@@ -51,9 +51,9 @@ func (r *Runners) ApolloMatchup(ctx context.Context) proto.Message {
 	return matchup
 }
 
-// ApolloMatchSum is Apollo::GetMatchSum
-func (r *Runners) ApolloMatchSum(ctx context.Context) proto.Message {
-	sum, err := r.Apollo.GetMatchSum(ctx, &apb.GetMatchSumRequest{
+// LucindaMatchSum is Lucinda::GetMatchSum
+func (r *Runners) LucindaMatchSum(ctx context.Context) proto.Message {
+	sum, err := r.Lucinda.GetMatchSum(ctx, &apb.LucindaRpc_GetMatchSumRequest{
 		Filters: []*apb.MatchFilters{
 			{
 				ChampionId: 103,
