@@ -18,10 +18,10 @@ import (
 )
 
 var (
-	apolloHost = flag.String("apollo_host", "localhost:4834", "Host of the Lucinda server.")
-	charonHost = flag.String("charon_host", "localhost:5609", "Host of the Charon server.")
-	printJSON  = flag.Bool("json", false, "Prints output in JSON")
-	runner     = flag.String("runner", "", "Runner")
+	lucindaHost = flag.String("lucinda_host", "localhost:45045", "Host of the Lucinda server.")
+	charonHost  = flag.String("charon_host", "localhost:5609", "Host of the Charon server.")
+	printJSON   = flag.Bool("json", false, "Prints output in JSON")
+	runner      = flag.String("runner", "", "Runner")
 
 	locale  = flag.String("locale", "en_US", "Locale")
 	matchId = flag.Uint64("matchId", 2300639987, "Match ID to use with Charon")
@@ -38,8 +38,8 @@ func main() {
 	}
 
 	if strings.Contains(*runner, "Lucinda") {
-		logger.Infof("Connecting to Lucinda at %q", *apolloHost)
-		conn, err := grpc.Dial(*apolloHost, grpc.WithInsecure())
+		logger.Infof("Connecting to Lucinda at %q", *lucindaHost)
+		conn, err := grpc.Dial(*lucindaHost, grpc.WithInsecure())
 		if err != nil {
 			logger.Fatalf("Could not connect to Lucinda: %v", err)
 		}

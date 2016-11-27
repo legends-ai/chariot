@@ -3,6 +3,7 @@ package runners
 import (
 	apb "github.com/asunaio/chariot/gen-go/asuna"
 	"github.com/golang/protobuf/proto"
+	"github.com/golang/protobuf/ptypes/empty"
 	"golang.org/x/net/context"
 )
 
@@ -77,4 +78,13 @@ func (r *Runners) CharonStatic(ctx context.Context) proto.Message {
 		r.Logger.Fatalf("Could not get static: %v", err)
 	}
 	return sc
+}
+
+// CharonStaticVersions is Charon::GetVersions
+func (r *Runners) CharonStaticVersions(ctx context.Context) proto.Message {
+	sv, err := r.Charon.GetStaticVersions(ctx, &empty.Empty{})
+	if err != nil {
+		r.Logger.Fatalf("Could not get static versions: %v", err)
+	}
+	return sv
 }
