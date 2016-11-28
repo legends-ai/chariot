@@ -61,6 +61,9 @@ func (r *Runners) Run(ctx context.Context, runner string) proto.Message {
 	case "Vulgate::GetChampions":
 		return r.VulgateChampions(ctx)
 
+	case "Vulgate::GetEntry":
+		return r.VulgateEntry(ctx)
+
 	default:
 		r.Logger.Fatalf("Unknown runner %q", runner)
 	}

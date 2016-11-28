@@ -29,7 +29,7 @@ var (
 	locale        = flag.String("locale", "en_US", "Locale")
 	region        = flag.String("region", "NA", "Region")
 	role          = flag.String("role", "MID", "Role")
-	version       = flag.String("version", "6.23.1", "Version")
+	version       = flag.String("version", "", "Version")
 	vulgateFormat = flag.String("vulgate_format", "BASIC", "Vulgate response format")
 
 	// Default is Ahri,Annie
