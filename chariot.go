@@ -2,15 +2,16 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"flag"
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/golang/protobuf/jsonpb"
 	"github.com/golang/protobuf/proto"
-	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
 	apb "github.com/asunaio/chariot/gen-go/asuna"
@@ -27,9 +28,14 @@ var (
 
 	locale        = flag.String("locale", "en_US", "Locale")
 	region        = flag.String("region", "NA", "Region")
-	matchId       = flag.Uint64("matchId", 2300639987, "Match ID to use with Charon")
-	version       = flag.String("version", "", "Version")
+	role          = flag.String("role", "MID", "Role")
+	version       = flag.String("version", "6.23.1", "Version")
 	vulgateFormat = flag.String("vulgate_format", "BASIC", "Vulgate response format")
+
+	// Default is Ahri,Annie
+	championId = flag.String("championId", "103,1", "Champion ID. Pass multiple champions delimited by a ,")
+	matchId    = flag.Uint64("matchId", 2300639987, "Match ID to use with Charon")
+	summonerId = flag.String("summonerId", "29236065,24575247", "Summoner ID to use with Charon. Pass multiple summoners delimited by a ,")
 )
 
 func main() {
@@ -37,7 +43,7 @@ func main() {
 	logger := logrus.New()
 
 	r := setupRunners(logger)
-	ctx := *setupContext()
+	ctx := context.Background()
 
 	logger.Infof("Running runner %q", *runner)
 	start := time.Now()
@@ -94,13 +100,38 @@ func setupRunners(logger *logrus.Logger) *runners.Runners {
 		r.Vulgate = apb.NewVulgateClient(conn)
 	}
 
+	r.Flags = runners.Flags{
+		Locale:        apb.Locale(apb.Locale_value[*locale]),
+		Region:        apb.Region(apb.Region_value[*region]),
+		Role:          apb.Role(apb.Role_value[*role]),
+		ChampionId:    stringToUint32Slice(*championId),
+		MatchId:       *matchId,
+		SummonerId:    stringToUint64Slice(*summonerId),
+		Version:       *version,
+		VulgateFormat: *vulgateFormat,
+	}
+
 	return r
 }
 
-func setupContext() *context.Context {
-	ctx := context.WithValue(context.Background(), "locale", *locale)
-	ctx = context.WithValue(ctx, "region", *region)
-	ctx = context.WithValue(ctx, "matchId", *matchId)
-	ctx = context.WithValue(ctx, "version", *version)
-	return &ctx
+func stringToUint32Slice(s string) []uint32 {
+	out := []uint32{}
+	for _, token := range strings.Split(s, ",") {
+		// TODO return error on failure
+		if uint, err := strconv.ParseUint(token, 10, 32); err == nil {
+			out = append(out, uint32(uint))
+		}
+	}
+	return out
+}
+
+func stringToUint64Slice(s string) []uint64 {
+	out := []uint64{}
+	for _, token := range strings.Split(s, ",") {
+		// TODO return error on failure
+		if uint, err := strconv.ParseUint(token, 10, 64); err == nil {
+			out = append(out, uint)
+		}
+	}
+	return out
 }

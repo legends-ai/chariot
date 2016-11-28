@@ -11,8 +11,8 @@ import (
 func (r *Runners) CharonMatch(ctx context.Context) proto.Message {
 	match, err := r.Charon.GetMatch(ctx, &apb.CharonRpc_MatchRequest{
 		Match: &apb.MatchId{
-			Region: apb.Region(apb.Region_value[ctx.Value("region").(string)]),
-			Id:     ctx.Value("matchId").(uint64),
+			Region: r.Flags.Region,
+			Id:     r.Flags.MatchId,
 		},
 	})
 	if err != nil {
@@ -25,8 +25,8 @@ func (r *Runners) CharonMatch(ctx context.Context) proto.Message {
 func (r *Runners) CharonDominionMatch(ctx context.Context) proto.Message {
 	match, err := r.Charon.GetMatch(ctx, &apb.CharonRpc_MatchRequest{
 		Match: &apb.MatchId{
-			Region: apb.Region_NA,
-			Id:     2315462640,
+			Region: r.Flags.Region,
+			Id:     r.Flags.MatchId,
 		},
 	})
 	if err != nil {
@@ -39,8 +39,8 @@ func (r *Runners) CharonDominionMatch(ctx context.Context) proto.Message {
 func (r *Runners) CharonMatchList(ctx context.Context) proto.Message {
 	match, err := r.Charon.GetMatchList(ctx, &apb.CharonRpc_MatchListRequest{
 		Summoner: &apb.SummonerId{
-			Region: apb.Region_NA,
-			Id:     29236065,
+			Region: r.Flags.Region,
+			Id:     r.Flags.SummonerId[0],
 		},
 		Seasons: []string{
 			"PRESEASON2015",
@@ -58,8 +58,8 @@ func (r *Runners) CharonMatchList(ctx context.Context) proto.Message {
 // CharonRankings is Charon::GetRankings
 func (r *Runners) CharonRankings(ctx context.Context) proto.Message {
 	rankings, err := r.Charon.GetRankings(ctx, &apb.CharonRpc_RankingsRequest{
-		Region:      apb.Region(apb.Region_value[ctx.Value("region").(string)]),
-		SummonerIds: []uint64{29236065, 24575247},
+		Region:      r.Flags.Region,
+		SummonerIds: r.Flags.SummonerId,
 	})
 	if err != nil {
 		r.Logger.Fatalf("Could not get rankings: %v", err)
@@ -70,9 +70,9 @@ func (r *Runners) CharonRankings(ctx context.Context) proto.Message {
 // CharonStaticChampions is Charon::GetStatic
 func (r *Runners) CharonStatic(ctx context.Context) proto.Message {
 	sc, err := r.Charon.GetStatic(ctx, &apb.CharonRpc_StaticRequest{
-		Region:  apb.Region(apb.Region_value[ctx.Value("region").(string)]),
-		Locale:  apb.Locale(apb.Locale_value[ctx.Value("locale").(string)]),
-		Version: ctx.Value("version").(string),
+		Region:  r.Flags.Region,
+		Locale:  r.Flags.Locale,
+		Version: r.Flags.Version,
 	})
 	if err != nil {
 		r.Logger.Fatalf("Could not get static: %v", err)

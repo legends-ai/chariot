@@ -9,7 +9,7 @@ import (
 // LucindaChampion is Lucinda::Champion
 func (r *Runners) LucindaChampion(ctx context.Context) proto.Message {
 	champion, err := r.Lucinda.GetChampion(ctx, &apb.LucindaRpc_GetChampionRequest{
-		ChampionId: 103, // this is Ahri
+		ChampionId: r.Flags.ChampionId[0],
 		Patch: &apb.PatchRange{
 			Min: "6.18",
 			Max: "6.18",
@@ -19,8 +19,8 @@ func (r *Runners) LucindaChampion(ctx context.Context) proto.Message {
 			Min: 0x0000,
 			Max: 0x1000,
 		},
-		Region: apb.Region_NA,
-		Role:   apb.Role_MID,
+		Region: r.Flags.Region,
+		Role:   r.Flags.Role,
 	})
 	if err != nil {
 		r.Logger.Fatalf("Could not get champion: %v", err)
@@ -31,8 +31,8 @@ func (r *Runners) LucindaChampion(ctx context.Context) proto.Message {
 // LucindaMatchup is Lucinda::Matchup
 func (r *Runners) LucindaMatchup(ctx context.Context) proto.Message {
 	matchup, err := r.Lucinda.GetMatchup(ctx, &apb.LucindaRpc_GetMatchupRequest{
-		FocusChampionId: 51, // this is Caitlyn
-		EnemyChampionId: 81, // this is Ezreal
+		FocusChampionId: r.Flags.ChampionId[0],
+		EnemyChampionId: r.Flags.ChampionId[1],
 		Patch: &apb.PatchRange{
 			Min: "6.16",
 			Max: "6.18",
@@ -42,8 +42,8 @@ func (r *Runners) LucindaMatchup(ctx context.Context) proto.Message {
 			Min: 0x0000,
 			Max: 0x1000,
 		},
-		Region: apb.Region_NA,
-		Role:   apb.Role_BOT,
+		Region: r.Flags.Region,
+		Role:   r.Flags.Role,
 	})
 	if err != nil {
 		r.Logger.Fatalf("Could not get matchup: %v", err)
@@ -56,36 +56,36 @@ func (r *Runners) LucindaMatchSum(ctx context.Context) proto.Message {
 	sum, err := r.Lucinda.GetMatchSum(ctx, &apb.LucindaRpc_GetMatchSumRequest{
 		Filters: []*apb.MatchFilters{
 			{
-				ChampionId: 103,
+				ChampionId: int32(r.Flags.ChampionId[0]),
 				EnemyId:    -1,
 				Patch:      "6.18",
 				Tier:       0x40,
-				Region:     apb.Region_NA,
-				Role:       apb.Role_MID,
+				Region:     r.Flags.Region,
+				Role:       r.Flags.Role,
 			},
 			{
-				ChampionId: 103,
+				ChampionId: int32(r.Flags.ChampionId[0]),
 				EnemyId:    -1,
 				Patch:      "6.18",
 				Tier:       0x50,
-				Region:     apb.Region_NA,
-				Role:       apb.Role_MID,
+				Region:     r.Flags.Region,
+				Role:       r.Flags.Role,
 			},
 			{
-				ChampionId: 103,
+				ChampionId: int32(r.Flags.ChampionId[0]),
 				EnemyId:    -1,
 				Patch:      "6.18",
 				Tier:       0x60,
-				Region:     apb.Region_NA,
-				Role:       apb.Role_MID,
+				Region:     r.Flags.Region,
+				Role:       r.Flags.Role,
 			},
 			{
-				ChampionId: 103,
+				ChampionId: int32(r.Flags.ChampionId[0]),
 				EnemyId:    -1,
 				Patch:      "6.18",
 				Tier:       0x70,
-				Region:     apb.Region_NA,
-				Role:       apb.Role_MID,
+				Region:     r.Flags.Region,
+				Role:       r.Flags.Role,
 			},
 		},
 	})

@@ -7,9 +7,21 @@ import (
 	"golang.org/x/net/context"
 )
 
+type Flags struct {
+	Locale        apb.Locale
+	Region        apb.Region
+	Role          apb.Role
+	ChampionId    []uint32
+	MatchId       uint64
+	SummonerId    []uint64
+	Version       string
+	VulgateFormat string
+}
+
 // Runners runs some shit
 type Runners struct {
 	Logger *logrus.Logger
+	Flags  Flags
 
 	Charon  apb.CharonClient
 	Lucinda apb.LucindaClient
@@ -45,6 +57,9 @@ func (r *Runners) Run(ctx context.Context, runner string) proto.Message {
 
 	case "Lucinda::GetMatchSum":
 		return r.LucindaMatchSum(ctx)
+
+	case "Vulgate::GetChampions":
+		return r.VulgateChampions(ctx)
 
 	default:
 		r.Logger.Fatalf("Unknown runner %q", runner)
