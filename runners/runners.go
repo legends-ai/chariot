@@ -11,8 +11,9 @@ import (
 type Runners struct {
 	Logger *logrus.Logger
 
-	Lucinda apb.LucindaClient
 	Charon  apb.CharonClient
+	Lucinda apb.LucindaClient
+	Vulgate apb.VulgateClient
 }
 
 func (r *Runners) Run(ctx context.Context, runner string) proto.Message {

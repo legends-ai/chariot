@@ -7,11 +7,11 @@ import (
 	"golang.org/x/net/context"
 )
 
-// CharonRpc_Match is Charon::GetMatch
+// CharonMatch is Charon::GetMatch
 func (r *Runners) CharonMatch(ctx context.Context) proto.Message {
 	match, err := r.Charon.GetMatch(ctx, &apb.CharonRpc_MatchRequest{
 		Match: &apb.MatchId{
-			Region: apb.Region_NA,
+			Region: apb.Region(apb.Region_value[ctx.Value("region").(string)]),
 			Id:     ctx.Value("matchId").(uint64),
 		},
 	})
@@ -21,7 +21,7 @@ func (r *Runners) CharonMatch(ctx context.Context) proto.Message {
 	return match
 }
 
-// CharonRpc_Match is Charon::GetDominionMatch
+// CharonDominionMatch is Charon::GetDominionMatch
 func (r *Runners) CharonDominionMatch(ctx context.Context) proto.Message {
 	match, err := r.Charon.GetMatch(ctx, &apb.CharonRpc_MatchRequest{
 		Match: &apb.MatchId{
@@ -35,7 +35,7 @@ func (r *Runners) CharonDominionMatch(ctx context.Context) proto.Message {
 	return match
 }
 
-// CharonRpc_MatchList is Charon::GetMatchList
+// CharonMatchList is Charon::GetMatchList
 func (r *Runners) CharonMatchList(ctx context.Context) proto.Message {
 	match, err := r.Charon.GetMatchList(ctx, &apb.CharonRpc_MatchListRequest{
 		Summoner: &apb.SummonerId{
@@ -58,7 +58,7 @@ func (r *Runners) CharonMatchList(ctx context.Context) proto.Message {
 // CharonRankings is Charon::GetRankings
 func (r *Runners) CharonRankings(ctx context.Context) proto.Message {
 	rankings, err := r.Charon.GetRankings(ctx, &apb.CharonRpc_RankingsRequest{
-		Region:      apb.Region_NA,
+		Region:      apb.Region(apb.Region_value[ctx.Value("region").(string)]),
 		SummonerIds: []uint64{29236065, 24575247},
 	})
 	if err != nil {
@@ -70,7 +70,7 @@ func (r *Runners) CharonRankings(ctx context.Context) proto.Message {
 // CharonStaticChampions is Charon::GetStatic
 func (r *Runners) CharonStatic(ctx context.Context) proto.Message {
 	sc, err := r.Charon.GetStatic(ctx, &apb.CharonRpc_StaticRequest{
-		Region:  apb.Region_NA,
+		Region:  apb.Region(apb.Region_value[ctx.Value("region").(string)]),
 		Locale:  apb.Locale(apb.Locale_value[ctx.Value("locale").(string)]),
 		Version: ctx.Value("version").(string),
 	})

@@ -18,21 +18,51 @@ import (
 )
 
 var (
-	lucindaHost = flag.String("lucinda_host", "localhost:45045", "Host of the Lucinda server.")
 	charonHost  = flag.String("charon_host", "localhost:5609", "Host of the Charon server.")
-	printJSON   = flag.Bool("json", false, "Prints output in JSON")
-	runner      = flag.String("runner", "", "Runner")
+	lucindaHost = flag.String("lucinda_host", "localhost:45045", "Host of the Lucinda server.")
+	vulgateHost = flag.String("vulgate_host", "localhost:6205", "Host of the Vulgate server.")
 
-	locale  = flag.String("locale", "en_US", "Locale")
-	matchId = flag.Uint64("matchId", 2300639987, "Match ID to use with Charon")
-	version = flag.String("version", "", "Version")
+	runner    = flag.String("runner", "", "Runner")
+	printJSON = flag.Bool("json", false, "Prints output in JSON")
+
+	locale        = flag.String("locale", "en_US", "Locale")
+	region        = flag.String("region", "NA", "Region")
+	matchId       = flag.Uint64("matchId", 2300639987, "Match ID to use with Charon")
+	version       = flag.String("version", "", "Version")
+	vulgateFormat = flag.String("vulgate_format", "BASIC", "Vulgate response format")
 )
 
 func main() {
 	flag.Parse()
 	logger := logrus.New()
 
-	// set up runners
+	r := setupRunners(logger)
+	ctx := *setupContext()
+
+	logger.Infof("Running runner %q", *runner)
+	start := time.Now()
+
+	var out bytes.Buffer
+	msg := r.Run(ctx, *runner)
+	if *printJSON {
+		if err := (&jsonpb.Marshaler{
+			EnumsAsInts:  false,
+			EmitDefaults: true,
+			OrigName:     false,
+		}).Marshal(&out, msg); err != nil {
+			r.Logger.Fatalf("Could not marshal msg: %v", err)
+		}
+	} else {
+		if err := proto.MarshalText(&out, msg); err != nil {
+			r.Logger.Fatalf("Could not marshal msg: %v", err)
+		}
+	}
+	fmt.Println(out.String())
+
+	logger.Infof("Completed; took %s", time.Now().Sub(start))
+}
+
+func setupRunners(logger *logrus.Logger) *runners.Runners {
 	r := &runners.Runners{
 		Logger: logger,
 	}
@@ -55,28 +85,22 @@ func main() {
 		r.Charon = apb.NewCharonClient(conn)
 	}
 
+	if strings.Contains(*runner, "Vulgate") {
+		logger.Infof("Connecting to Vulgate at %q", *vulgateHost)
+		conn, err := grpc.Dial(*vulgateHost, grpc.WithInsecure())
+		if err != nil {
+			logger.Fatalf("Could not connect to Vulgate: %v", err)
+		}
+		r.Vulgate = apb.NewVulgateClient(conn)
+	}
+
+	return r
+}
+
+func setupContext() *context.Context {
 	ctx := context.WithValue(context.Background(), "locale", *locale)
+	ctx = context.WithValue(ctx, "region", *region)
 	ctx = context.WithValue(ctx, "matchId", *matchId)
 	ctx = context.WithValue(ctx, "version", *version)
-	logger.Infof("Running runner %q", *runner)
-	start := time.Now()
-
-	var out bytes.Buffer
-	msg := r.Run(ctx, *runner)
-	if *printJSON {
-		if err := (&jsonpb.Marshaler{
-			EnumsAsInts:  false,
-			EmitDefaults: true,
-			OrigName:     false,
-		}).Marshal(&out, msg); err != nil {
-			r.Logger.Fatalf("Could not marshal msg: %v", err)
-		}
-	} else {
-		if err := proto.MarshalText(&out, msg); err != nil {
-			r.Logger.Fatalf("Could not marshal msg: %v", err)
-		}
-	}
-	fmt.Println(out.String())
-
-	logger.Infof("Completed; took %s", time.Now().Sub(start))
+	return &ctx
 }
