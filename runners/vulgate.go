@@ -43,7 +43,11 @@ func (r *Runners) VulgateEntry(ctx context.Context) proto.Message {
 		}
 	}
 
-	entry, err := r.Vulgate.GetEntry(ctx, context)
+	entry, err := r.Vulgate.GetEntry(ctx, &apb.VulgateRpc_GetEntryRequest{
+		Context: context,
+		Format:  apb.VulgateRpc_GetEntryRequest_Format(apb.VulgateRpc_GetEntryRequest_Format_value[r.Flags.VulgateFormat]),
+	})
+
 	if err != nil {
 		r.Logger.Fatalf("Could not get entry from vulgate: %v", err)
 	}
