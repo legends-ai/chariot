@@ -11,8 +11,8 @@ func (r *Runners) LucindaChampion(ctx context.Context) proto.Message {
 	champion, err := r.Lucinda.GetChampion(ctx, &apb.LucindaRpc_GetChampionRequest{
 		ChampionId: r.Flags.ChampionId[0],
 		Patch: &apb.PatchRange{
-			Min: "6.18",
-			Max: "6.18",
+			Min: r.Flags.Version,
+			Max: r.Flags.Version,
 		},
 		// match everything
 		Tier: &apb.TierRange{
