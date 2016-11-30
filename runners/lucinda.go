@@ -80,7 +80,7 @@ func (r *Runners) LucindaMatchSum(ctx context.Context) proto.Message {
 			{
 				ChampionId: int32(r.Flags.ChampionId[0]),
 				EnemyId:    -1,
-				Patch:      "6.18",
+				Patch:      r.Flags.Version,
 				Tier:       0x40,
 				Region:     r.Flags.Region,
 				Role:       r.Flags.Role,
@@ -88,7 +88,7 @@ func (r *Runners) LucindaMatchSum(ctx context.Context) proto.Message {
 			{
 				ChampionId: int32(r.Flags.ChampionId[0]),
 				EnemyId:    -1,
-				Patch:      "6.18",
+				Patch:      r.Flags.Version,
 				Tier:       0x50,
 				Region:     r.Flags.Region,
 				Role:       r.Flags.Role,
@@ -96,7 +96,7 @@ func (r *Runners) LucindaMatchSum(ctx context.Context) proto.Message {
 			{
 				ChampionId: int32(r.Flags.ChampionId[0]),
 				EnemyId:    -1,
-				Patch:      "6.18",
+				Patch:      r.Flags.Version,
 				Tier:       0x60,
 				Region:     r.Flags.Region,
 				Role:       r.Flags.Role,
@@ -104,7 +104,7 @@ func (r *Runners) LucindaMatchSum(ctx context.Context) proto.Message {
 			{
 				ChampionId: int32(r.Flags.ChampionId[0]),
 				EnemyId:    -1,
-				Patch:      "6.18",
+				Patch:      r.Flags.Version,
 				Tier:       0x70,
 				Region:     r.Flags.Region,
 				Role:       r.Flags.Role,
