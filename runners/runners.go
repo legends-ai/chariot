@@ -49,6 +49,9 @@ func (r *Runners) Run(ctx context.Context, runner string) proto.Message {
 	case "Charon::GetStaticVersions":
 		return r.CharonStaticVersions(ctx)
 
+	case "Lucinda::GetStatistics":
+		return r.LucindaStatistics(ctx)
+
 	case "Lucinda::GetChampion":
 		return r.LucindaChampion(ctx)
 

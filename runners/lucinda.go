@@ -6,6 +6,28 @@ import (
 	"golang.org/x/net/context"
 )
 
+// LucindaStatistics
+func (r *Runners) LucindaStatistics(ctx context.Context) proto.Message {
+	statistics, err := r.Lucinda.GetStatistics(ctx, &apb.LucindaRpc_GetStatisticsRequest{
+		EnemyChampionId: -1,
+		Patch: &apb.PatchRange{
+			Min: r.Flags.Version,
+			Max: r.Flags.Version,
+		},
+		// match everything
+		Tier: &apb.TierRange{
+			Min: 0x0000,
+			Max: 0x1000,
+		},
+		Region:       r.Flags.Region,
+		ForceRefresh: true,
+	})
+	if err != nil {
+		r.Logger.Fatalf("Could not get statistics: %v", err)
+	}
+	return statistics
+}
+
 // LucindaChampion is Lucinda::Champion
 func (r *Runners) LucindaChampion(ctx context.Context) proto.Message {
 	champion, err := r.Lucinda.GetChampion(ctx, &apb.LucindaRpc_GetChampionRequest{
@@ -34,8 +56,8 @@ func (r *Runners) LucindaMatchup(ctx context.Context) proto.Message {
 		FocusChampionId: r.Flags.ChampionId[0],
 		EnemyChampionId: r.Flags.ChampionId[1],
 		Patch: &apb.PatchRange{
-			Min: "6.16",
-			Max: "6.18",
+			Min: r.Flags.Version,
+			Max: r.Flags.Version,
 		},
 		// match everything
 		Tier: &apb.TierRange{
