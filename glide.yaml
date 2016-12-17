@@ -1,12 +1,15 @@
 package: github.com/asunaio/chariot
 import:
 - package: github.com/Sirupsen/logrus
+  version: ~0.11.0
 - package: github.com/golang/protobuf
   subpackages:
-  - proto
-  - ptypes/timestamp
   - jsonpb
+  - proto
+  - ptypes/empty
+  - ptypes/timestamp
 - package: golang.org/x/net
   subpackages:
   - context
 - package: google.golang.org/grpc
+  version: ~1.0.5

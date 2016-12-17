@@ -1,5 +1,5 @@
-hash: 335b1097390e199a07afc04326840f62b2b2e5845d8c05b95efe8d884020eb6b
-updated: 2016-11-27T04:55:53.431054749-06:00
+hash: a2033d4def290c41677eb480cb142c265986dd959deb554802b6033590e95c5e
+updated: 2016-12-17T06:41:08.667585991-05:00
 imports:
 - name: github.com/golang/protobuf
   version: 1f49d83d9aa00e6ce4fc8258c71cc7786aec968a
@@ -25,7 +25,7 @@ imports:
   subpackages:
   - unix
 - name: google.golang.org/grpc
-  version: 0032a855ba5c8a3c8e0d71c2deef354b70af1584
+  version: 708a7f9f3283aa2d4f6132d287d78683babe55c8
   subpackages:
   - codes
   - credentials
@@ -34,5 +34,7 @@ imports:
   - metadata
   - naming
   - peer
+  - stats
+  - tap
   - transport
 testImports: []
