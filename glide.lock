@@ -1,12 +1,11 @@
-hash: a2033d4def290c41677eb480cb142c265986dd959deb554802b6033590e95c5e
-updated: 2016-12-17T06:41:08.667585991-05:00
+hash: 3ca13c5d68cd064783d507d07bf8d775b7c784c60998809702f8f3ddb71c7d92
+updated: 2016-12-31T19:56:16.880843734-05:00
 imports:
 - name: github.com/golang/protobuf
-  version: 1f49d83d9aa00e6ce4fc8258c71cc7786aec968a
+  version: 8ee79997227bf9b34611aee7946ae64735e6fd93
   subpackages:
   - jsonpb
   - proto
-  - ptypes/empty
   - ptypes/timestamp
 - name: github.com/Sirupsen/logrus
   version: d26492970760ca5d33129d2d799e34be5c4782eb
@@ -21,7 +20,7 @@ imports:
   - lex/httplex
   - trace
 - name: golang.org/x/sys
-  version: 8f0908ab3b2457e2e15403d3697c9ef5cb4b57a9
+  version: d75a52659825e75fff6158388dddc6a5b04f9ba5
   subpackages:
   - unix
 - name: google.golang.org/grpc
