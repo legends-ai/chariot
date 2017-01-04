@@ -16,8 +16,8 @@ func (r *Runners) LucindaStatistics(ctx context.Context) proto.Message {
 		},
 		// match everything
 		Tier: &apb.TierRange{
-			Min: 0x0000,
-			Max: 0x1000,
+			Min: apb.Tier_BRONZE,
+			Max: apb.Tier_CHALLENGER,
 		},
 		Region:       r.Flags.Region,
 		ForceRefresh: true,
@@ -38,8 +38,8 @@ func (r *Runners) LucindaChampion(ctx context.Context) proto.Message {
 		},
 		// match everything
 		Tier: &apb.TierRange{
-			Min: 0x0000,
-			Max: 0x1000,
+			Min: apb.Tier_BRONZE,
+			Max: apb.Tier_CHALLENGER,
 		},
 		Region: r.Flags.Region,
 		Role:   r.Flags.Role,
@@ -61,8 +61,8 @@ func (r *Runners) LucindaMatchup(ctx context.Context) proto.Message {
 		},
 		// match everything
 		Tier: &apb.TierRange{
-			Min: 0x0000,
-			Max: 0x1000,
+			Min: apb.Tier_BRONZE,
+			Max: apb.Tier_CHALLENGER,
 		},
 		Region: r.Flags.Region,
 		Role:   r.Flags.Role,
