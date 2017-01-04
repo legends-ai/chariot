@@ -20,12 +20,26 @@ func (r *Runners) CharonMatch(ctx context.Context) proto.Message {
 	return match
 }
 
+// CharonVilemawMatch is Charon::GetVilemawMatch
+func (r *Runners) CharonVilemawMatch(ctx context.Context) proto.Message {
+	match, err := r.Charon.GetMatch(ctx, &apb.CharonRpc_MatchRequest{
+		Match: &apb.MatchId{
+			Region: r.Flags.Region,
+			Id:     2390219332,
+		},
+	})
+	if err != nil {
+		r.Logger.Fatalf("Could not get vilemaw match: %v", err)
+	}
+	return match
+}
+
 // CharonDominionMatch is Charon::GetDominionMatch
 func (r *Runners) CharonDominionMatch(ctx context.Context) proto.Message {
 	match, err := r.Charon.GetMatch(ctx, &apb.CharonRpc_MatchRequest{
 		Match: &apb.MatchId{
 			Region: r.Flags.Region,
-			Id:     r.Flags.MatchId,
+			Id:     2315462640,
 		},
 	})
 	if err != nil {
