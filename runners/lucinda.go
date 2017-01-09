@@ -78,32 +78,28 @@ func (r *Runners) LucindaMatchSum(ctx context.Context) proto.Message {
 	sum, err := r.Lucinda.GetMatchSum(ctx, &apb.LucindaRpc_GetMatchSumRequest{
 		Filters: []*apb.MatchFilters{
 			{
-				ChampionId: int32(r.Flags.ChampionId[0]),
-				EnemyId:    -1,
+				ChampionId: &apb.ChampionId{Value: r.Flags.ChampionId[0]},
 				Patch:      r.Flags.Version,
 				Tier:       0x40,
 				Region:     r.Flags.Region,
 				Role:       r.Flags.Role,
 			},
 			{
-				ChampionId: int32(r.Flags.ChampionId[0]),
-				EnemyId:    -1,
+				ChampionId: &apb.ChampionId{Value: r.Flags.ChampionId[0]},
 				Patch:      r.Flags.Version,
 				Tier:       0x50,
 				Region:     r.Flags.Region,
 				Role:       r.Flags.Role,
 			},
 			{
-				ChampionId: int32(r.Flags.ChampionId[0]),
-				EnemyId:    -1,
+				ChampionId: &apb.ChampionId{Value: r.Flags.ChampionId[0]},
 				Patch:      r.Flags.Version,
 				Tier:       0x60,
 				Region:     r.Flags.Region,
 				Role:       r.Flags.Role,
 			},
 			{
-				ChampionId: int32(r.Flags.ChampionId[0]),
-				EnemyId:    -1,
+				ChampionId: &apb.ChampionId{Value: r.Flags.ChampionId[0]},
 				Patch:      r.Flags.Version,
 				Tier:       0x70,
 				Region:     r.Flags.Region,
