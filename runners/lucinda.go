@@ -9,7 +9,6 @@ import (
 // LucindaStatistics
 func (r *Runners) LucindaStatistics(ctx context.Context) proto.Message {
 	statistics, err := r.Lucinda.GetStatistics(ctx, &apb.LucindaRpc_GetStatisticsRequest{
-		EnemyChampionId: -1,
 		Patch: &apb.PatchRange{
 			Min: r.Flags.Version,
 			Max: r.Flags.Version,
@@ -31,7 +30,7 @@ func (r *Runners) LucindaStatistics(ctx context.Context) proto.Message {
 // LucindaChampion is Lucinda::Champion
 func (r *Runners) LucindaChampion(ctx context.Context) proto.Message {
 	champion, err := r.Lucinda.GetChampion(ctx, &apb.LucindaRpc_GetChampionRequest{
-		ChampionId: r.Flags.ChampionId[0],
+		ChampionId: &apb.ChampionId{Value: r.Flags.ChampionId[0]},
 		Patch: &apb.PatchRange{
 			Min: r.Flags.Version,
 			Max: r.Flags.Version,
@@ -53,8 +52,8 @@ func (r *Runners) LucindaChampion(ctx context.Context) proto.Message {
 // LucindaMatchup is Lucinda::Matchup
 func (r *Runners) LucindaMatchup(ctx context.Context) proto.Message {
 	matchup, err := r.Lucinda.GetMatchup(ctx, &apb.LucindaRpc_GetMatchupRequest{
-		FocusChampionId: r.Flags.ChampionId[0],
-		EnemyChampionId: r.Flags.ChampionId[1],
+		FocusChampionId: &apb.ChampionId{Value: r.Flags.ChampionId[0]},
+		EnemyChampionId: &apb.ChampionId{Value: r.Flags.ChampionId[1]},
 		Patch: &apb.PatchRange{
 			Min: r.Flags.Version,
 			Max: r.Flags.Version,
