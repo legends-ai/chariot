@@ -55,11 +55,11 @@ func (r *Runners) CharonMatchList(ctx context.Context) proto.Message {
 			Region: r.Flags.Region,
 			Id:     r.Flags.SummonerId[0],
 		},
-		Seasons: []string{
-			"PRESEASON2015",
-			"SEASON2015",
-			"PRESEASON2016",
-			"SEASON2016",
+		Seasons: []apb.Season{
+			apb.Season_PRESEASON2015,
+			apb.Season_SEASON2015,
+			apb.Season_PRESEASON2016,
+			apb.Season_SEASON2016,
 		},
 	})
 	if err != nil {

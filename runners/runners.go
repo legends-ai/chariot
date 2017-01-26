@@ -13,6 +13,7 @@ type Flags struct {
 	Role          apb.Role
 	ChampionId    []uint32
 	MatchId       uint64
+	Season        apb.Season
 	SummonerId    []uint64
 	Version       string
 	VulgateFormat string
@@ -25,6 +26,7 @@ type Runners struct {
 
 	Charon  apb.CharonClient
 	Lucinda apb.LucindaClient
+	Luna    apb.LunaClient
 	Vulgate apb.VulgateClient
 }
 
@@ -63,6 +65,9 @@ func (r *Runners) Run(ctx context.Context, runner string) proto.Message {
 
 	case "Lucinda::GetMatchSum":
 		return r.LucindaMatchSum(ctx)
+
+	case "Luna::GetSeasonRankings":
+		return r.LunaGetSeasonRankings(ctx)
 
 	case "Vulgate::GetChampions":
 		return r.VulgateChampions(ctx)

@@ -21,6 +21,7 @@ import (
 var (
 	charonHost  = flag.String("charon_host", "localhost:5609", "Host of the Charon server.")
 	lucindaHost = flag.String("lucinda_host", "localhost:45045", "Host of the Lucinda server.")
+	lunaHost    = flag.String("luna_host", "localhost:2389", "Host of the Luna server.")
 	vulgateHost = flag.String("vulgate_host", "localhost:6205", "Host of the Vulgate server.")
 
 	runner    = flag.String("runner", "", "Runner")
@@ -30,12 +31,13 @@ var (
 	region        = flag.String("region", "NA", "Region")
 	role          = flag.String("role", "MID", "Role")
 	version       = flag.String("version", "", "Version")
+	season        = flag.String("season", "PRESEASON2017", "Season")
 	vulgateFormat = flag.String("vulgate_format", "BASIC", "Vulgate response format")
 
 	// Default is Ahri,Annie
-	championId = flag.String("championId", "103,1", "Champion ID. Pass multiple champions delimited by a ,")
+	championId = flag.String("champion_ids", "103,1", "Champion ID. Pass multiple champions delimited by a ,")
 	matchId    = flag.Uint64("matchId", 2300639987, "Match ID to use with Charon")
-	summonerId = flag.String("summonerId", "29236065,24575247", "Summoner ID to use with Charon. Pass multiple summoners delimited by a ,")
+	summonerId = flag.String("summoner_ids", "29236065,24575247", "Summoner ID to use with Charon. Pass multiple summoners delimited by a ,")
 )
 
 func main() {
@@ -73,6 +75,15 @@ func setupRunners(logger *logrus.Logger) *runners.Runners {
 		Logger: logger,
 	}
 
+	if strings.Contains(*runner, "Charon") {
+		logger.Infof("Connecting to Charon at %q", *charonHost)
+		conn, err := grpc.Dial(*charonHost, grpc.WithInsecure())
+		if err != nil {
+			logger.Fatalf("Could not connect to Charon: %v", err)
+		}
+		r.Charon = apb.NewCharonClient(conn)
+	}
+
 	if strings.Contains(*runner, "Lucinda") {
 		logger.Infof("Connecting to Lucinda at %q", *lucindaHost)
 		conn, err := grpc.Dial(*lucindaHost, grpc.WithInsecure())
@@ -82,13 +93,13 @@ func setupRunners(logger *logrus.Logger) *runners.Runners {
 		r.Lucinda = apb.NewLucindaClient(conn)
 	}
 
-	if strings.Contains(*runner, "Charon") {
-		logger.Infof("Connecting to Charon at %q", *charonHost)
-		conn, err := grpc.Dial(*charonHost, grpc.WithInsecure())
+	if strings.Contains(*runner, "Luna") {
+		logger.Infof("Connecting to Luna at %q", *lunaHost)
+		conn, err := grpc.Dial(*lunaHost, grpc.WithInsecure())
 		if err != nil {
-			logger.Fatalf("Could not connect to Charon: %v", err)
+			logger.Fatalf("Could not connect to Luna: %v", err)
 		}
-		r.Charon = apb.NewCharonClient(conn)
+		r.Luna = apb.NewLunaClient(conn)
 	}
 
 	if strings.Contains(*runner, "Vulgate") {
@@ -106,6 +117,7 @@ func setupRunners(logger *logrus.Logger) *runners.Runners {
 		Role:          apb.Role(apb.Role_value[*role]),
 		ChampionId:    stringToUint32Slice(*championId),
 		MatchId:       *matchId,
+		Season:        apb.Season(apb.Season_value[*season]),
 		SummonerId:    stringToUint64Slice(*summonerId),
 		Version:       *version,
 		VulgateFormat: *vulgateFormat,
